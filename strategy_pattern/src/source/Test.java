@@ -2,6 +2,9 @@ package source;
 
 public class Test {
 	public static void main(String[] args) {
-		System.out.println("dees");
+		Duck mallialDuck = new MallardDuck();
+		mallialDuck.handleFlyable();
+		mallialDuck.handleQuackable();
+		mallialDuck.display();
 	}
 }

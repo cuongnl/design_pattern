@@ -2,10 +2,13 @@ package source;
 
 public class MallardDuck extends Duck {
 
+	public MallardDuck() {
+		flyable = new FlyWithWing();
+		quackable = new Quack();
+	}
+	
 	@Override
 	public void display() {
-		// TODO Auto-generated method stub
-		
+		System.out.println("mallard duck");
 	}
-
 }
