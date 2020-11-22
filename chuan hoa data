@@ -1,0 +1,3 @@
+1) dạng chuẩn hóa 1:
+    - Mỗi hàng phải không chứa nhóm lặp (Tính nguyên tố).
+    - Mỗi hàng phải có một thuộc tính nhận dạng duy nhất (Khóa chính)
