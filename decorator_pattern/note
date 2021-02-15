@@ -1,0 +1,97 @@
+1) Decorator Pattern là gì?
+    - cho phép thêm chức năng mới vào đối tượng hiện tại mà không muốn ảnh hưởng đến các đối tượng khác. Kiểu thiết kế này có cấu trúc hoạt động như một lớp bao bọc (wrap) cho lớp hiện có. Mỗi khi cần thêm tính năng mới, đối tượng hiện có được wrap trong một đối tượng mới (decorator class).
+    - Decorator pattern sử dụng composition thay vì inheritance (thừa kế) để mở rộng đối tượng.
+-----------------------------------------------------------------------
+2) Lợi ích của Decorator Pattern là gì?
+    - Tăng cường khả năng mở rộng của đối tượng, bởi vì những thay đổi được     thực hiện bằng cách implement trên các lớp mới.
+    - Client sẽ không nhận thấy sự khác biệt khi bạn đưa cho nó một wrapper thay vì đối tượng gốc.
+    - Một đối tượng có thể được bao bọc bởi nhiều wrapper cùng một lúc.
+    - Cho phép thêm hoặc xóa tính năng của một đối tượng lúc thực thi (run-time).
+-----------------------------------------------------------------------
+3) Sử dụng Decorator Pattern khi nào?
+    - Khi muốn thêm tính năng mới cho các đối tượng mà không ảnh hưởng đến các đối tượng này.
+    - Khi không thể mở rộng một đối tượng bằng cách thừa kế (inheritance). Chẳng hạn, một class sử dụng từ khóa final, muốn mở rộng class này chỉ còn cách duy nhất là sử dụng decorator
+    - Trong một số nhiều trường hợp mà việc sử dụng kế thừa sẽ mất nhiều công sức trong việc viết code
+-----------------------------------------------------------------------
+4) Ví dụ
+ - VD1: thiết kế 1 tiệm cafe
+   + cách 1: sử dụng kế thừa
+                                                            
+                                                        -----------------------------
+                                                        |   Beverage                |
+                                                        -----------------------------
+                                                        |   description             |
+                                                        |   const()                 |
+                                                        -----------------------------
+
+              -----------------------------      -----------------------------      -----------------------------      -----------------------------
+              |   cafe                    |      |      Capuchino            |      |       chà sữa             |      |        ......             |
+              -----------------------------      -----------------------------      -----------------------------      -----------------------------
+              |   description             |      |      description()        |      |       description         |
+              |   const()                 |      |      const()              |      |       const()             |       -----------------------------
+              -----------------------------      -----------------------------      -----------------------------       |         .....             |
+                                                                                                                        -----------------------------
+
+        - Mới thành lập, của hàng chỉ có 3 loại là cafe, capuchino, chà sữa. Tất cả đều kế thừa từ beverage.
+        - Sau 1 thời gian, cửa hàng mở rộng và thêm nhiều loại sản phẩm mới.
+        - Sau 1 thời gian nữa, các loại toping nổi lên --> cửa hàng quyết định thêm các loại topping vào với sản phẩm. Có 2 hướng giải quyết
+            -----------------------------------------------------------------------------------------------------------------------------------                    
+            1) tạo các class mới tương ứng với loại nước uống + toping
+                - quá nhiều class mới được tạo ra trong khi những class này đều có điểm trung là loại topping --> thêm nhiều source, khó quản lý và bảo trì 
+                - khi thay đổi giá 1 loại topping --> thay đổi rất nhiều source liên quan đến loại topping đó
+                - Thêm 1 loại topping mới --> thêm nhiều source
+            -----------------------------------------------------------------------------------------------------------------------------------
+            2) thêm toping vào class cha, class con kế thừa và sử dụng
+                                                        -----------------------------
+                                                        |   Beverage                |
+                                                        -----------------------------
+                                                        |   description             |
+                                                        |   mill                    |
+                                                        |   mocha                   |
+                                                        |   soy                     |
+                                                        |   const()                 |
+                                                        -----------------------------
+
+            
+                      -----------------------------      -----------------------------      -----------------------------      
+                      |   cafe                    |      |      Capuchino            |      |       chà sữa             |      
+                      -----------------------------      -----------------------------      -----------------------------     
+                      |   description             |      |      description()        |      |       description         |
+                      |   const()                 |      |      const()              |      |       const()             |     
+                      -----------------------------      -----------------------------      -----------------------------     
+               - thêm loại topping mới --> thêm thuộc tính vào lớp cha và thay đổi hàm const() lớp cha --> đã thay đổi source sẽ dẫn đến ảnh ưởng đến source cũ 
+               - kế thừa sẽ cho phép class con có toàn bộ thuộc tính của class cha --> loại đồ uống trà không có topping nhưng sau khi kế thừa sẽ có --> thừa source và không hợp lý
+               - Nếu khách hàng muốn lương gấp đôi toping --> thay đổi hàm const --> thay đổi source cũ
+            -----------------------------------------------------------------------------------------------------------------------------------
+            --> 2 hướng giải quyết trên đều có vấn đề
+            -----------------------------------------------------------------------------------------------------------------------------------
+
+    + cách 2: áp dụng design pattern
+        
+        -------------------------------------------------------------------------                                                                       
+        |                                                                       |        
+        |   MOCHA      ------------------------------------------------------   |
+        |              |                                                    |   |
+        |   const()    | MILL       -------------------------------------   |   |
+        |              |            |                                   |   |   |                     
+        |              | const()    |   WHIP        -----------------   |   |   |
+        |              |            |               |               |   |   |   |
+        |              |            |   const()     |   CAFE        |   |   |   |
+        |              |            |               |               |   |   |   |
+        |              |            |               |  const()      |   |   |   |
+        |              |            |               |               |   |   |   |
+        |              |            |               -----------------   |   |   |
+        |              |            -------------------------------------   |   |
+        |              ------------------------------------------------------   |
+        |                                                                       |
+        -------------------------------------------------------------------------
+        - Bạn có thể sử dụng một hoặc nhiều trình trang trí (decorator) để bọc một đối tượng.
+        - đối tượng trang trí có kiểu giống như đối tượng mà nó trang trí, chúng ta có thể sử dụng một đối tượng được trang trí thay cho đối tượng ban đầu (được bọc).
+        - Các đối tượng có thể được trang trí bất cứ lúc nào, vì vậy chúng ta có thể trang trí các đối tượng một cách linh hoạt trong runtime với nhiều trang trí tùy thích.
+          
+            -----------------------------------------------------------------------------------------------------------------------------------
+        - Base của decorater
+                        ------------------------
+                        |       COMPONENT 
+                        |
+                        |
